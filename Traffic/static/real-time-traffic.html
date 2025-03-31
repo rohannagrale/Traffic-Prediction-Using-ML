@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Traffic Prediction</title>
+    <link rel="stylesheet" href="features.css">
+    <script src="script1.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6U75dzMICQpoZXnwnUSJo0iu8gPkZbck&callback=initMap" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script1.js" defer></script> 
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="images/logo-a.webp" alt="Traffic Predictor Logo" class="logo">
+                        <span class="site-title">Traffic Predictor</span>
+        </div>
+        <div class="menu-icon" onclick="toggleNavbar()">&#9776;</div> <!-- ✅ Hamburger Icon -->
+        <ul class="nav-links">
+            <li><a href="/index.html">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Features</a>
+                <ul class="dropdown-menu">
+                    <li><a href="real_time_traffic.html">Real-Time Traffic</a></li>
+                    <li><a href="ml-predictions.html">ML-Based Predictions</a></li>
+                    <li><a href="historical.html">Route Suggestions</a></li>
+                    
+                </ul>
+            </li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Real-Time Traffic Updates</h1>
+            <p>Get live traffic congestion data for better route planning.</p>
+        </div>
+        <div class="live-data-box">
+            <h3>Live Traffic Data</h3>
+            <p><strong>Current Congestion:</strong> <span id="congestion">Loading...</span></p>
+            <p><strong>Expected Delay:</strong> <span id="delay">Loading...</span></p>
+            <p><strong>Weather Impact:</strong> <span id="weather">Loading...</span></p>
+        </div>
+    </section>
+
+    <!-- Traffic Map -->
+    <section class="map-section">
+        <h2>Live Traffic Map</h2>
+        <div id="map"></div>
+    </section>
+
+    <!-- Traffic Insights -->
+    <section class="traffic-insights">
+        <h2 class="section-title">🚦 Traffic Insights & Analytics</h2>
+        <p class="section-subtitle">Understand traffic patterns with real-time and historical data insights.</p>
+    
+        <div class="insights-container">
+            <!-- Card 1: Traffic Congestion Graph -->
+            <div class="insight-card">
+                <h3>Traffic Congestion (Hourly)</h3>
+                <canvas id="congestionChart"></canvas>
+                <p class="graph-description">Traffic congestion levels in different areas of Thane.</p>
+            </div>
+    
+            <!-- Card 2: Speed Variations Graph -->
+            <div class="insight-card">
+                <h3>Average Speed (km/h)</h3>
+                <canvas id="speedChart"></canvas>
+                <p class="graph-description">Average vehicle speed across different roads.</p>
+            </div>
+    
+            <!-- Card 3: Accidents & Road Blocks -->
+            <div class="insight-card">
+                <h3>Accidents & Road Blocks</h3>
+                <canvas id="accidentChart"></canvas>
+                <p class="graph-description">Reported accidents and roadblocks in key areas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Traffic Predictor. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 19.2183, lng: 72.9781 }, // Thane location
+                zoom: 12
+            });
+    
+            var trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map);
+        }
+    
+        // Traffic Congestion Data (Per Place)
+        const congestionData = {
+            labels: ["Ghodbunder Road", "Eastern Express Highway", "Majiwada", "Thane Station", "Kalyan Phata"],
+            datasets: [{
+                label: "Congestion Level (%)",
+                data: [80, 70, 85, 60, 90],
+                backgroundColor: "rgba(255, 0, 127, 0.5)",
+                borderColor: "#ff007f",
+                borderWidth: 2
+            }]
+        };
+    
+        // Speed Variation Data (Per Place)
+        const speedData = {
+            labels: ["Ghodbunder Road", "Eastern Express Highway", "Majiwada", "Thane Station", "Kalyan Phata"],
+            datasets: [{
+                label: "Average Speed (km/h)",
+                data: [30, 40, 25, 20, 35],
+                backgroundColor: "rgba(0, 255, 255, 0.5)",
+                borderColor: "cyan",
+                borderWidth: 2
+            }]
+        };
+    
+        // Accident & Road Blocks Data (Per Place)
+        const accidentData = {
+            labels: ["Ghodbunder", "Eastern Express", "Majiwada", "Thane Station", "Kalyan Phata"],
+            datasets: [{
+                label: "Reported Cases",
+                data: [5, 3, 7, 2, 6],
+                backgroundColor: ["cyan", "#ff007f", "yellow", "red", "green"],
+                borderColor: "#fff",
+                borderWidth: 2
+            }]
+        };
+    
+        // Chart Configurations with X-axis Fix
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,  // ✅ Auto adjust size
+            scales: {
+                x: {
+                    ticks: {
+                        font: {
+                            size: 12,  // ✅ Bigger text for better visibility
+                            weight: "bold"
+                        },
+                        color: "#dddddd", // ✅ Light Grey/White text
+                        maxRotation: 20,  // ✅ Slight tilt to avoid overlap
+                        minRotation: 20
+                    },
+                    grid: {
+                        display: false // ✅ Removes extra grid lines
+                    }
+                },
+                y: {
+                    ticks: {
+                        font: {
+                            size: 12
+                        },
+                        color: "#eeeeee"
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 13
+                        },
+                        color: "#ffffff"  // ✅ White legend text
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    bottom: 15  // ✅ Adds space to prevent cutting off text
+                }
+            }
+        };
+    
+        // Creating Charts with Fix
+        new Chart(document.getElementById("congestionChart"), { type: "bar", data: congestionData, options: chartOptions });
+        new Chart(document.getElementById("speedChart"), { type: "bar", data: speedData, options: chartOptions });
+        new Chart(document.getElementById("accidentChart"), { type: "doughnut", data: accidentData });
+        function toggleNavbar() {
+            document.querySelector(".nav-links").classList.toggle("active");
+        }
+    </script>
+
+</body>
+</html>

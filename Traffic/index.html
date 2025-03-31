@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Prediction System</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script defer src="static/script.js"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="static/images/logo-a.webp" alt="Traffic Predictor Logo" class="logo">
+                <h1 class="site-title">Traffic Predictor</h1>
+            </div>
+            <div class="menu-icon" onclick="toggleNavbar()">&#9776;</div> 
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Features <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/static/real-time-traffic.html">Real-Time Traffic Updates</a></li>
+                        <li><a href="ml-predictions.html">ML-Based Predictions</a></li>
+                        <li><a href="static/historical.html">Best Route Suggestions</a></li>
+                    </ul>
+                </li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Smart Traffic Prediction</h1>
+            <p>Real-time Traffic Prediction Using Machine Learning</p>
+            <button class="shiny-cta">
+                <a href="#" style="text-decoration: none;"><span>GET STARTED</span></a>
+            </button>
+        </div>
+    </section>
+
+    <!-- System Description -->
+    <section class="system-description">
+        <div class="description-content">
+            <h2>🚦 About Our Traffic Prediction System</h2>
+            <p>
+            Traffic congestion is a major challenge in urban areas. Our **Machine Learning-based Traffic Prediction System** analyzes real-time 
+            and historical traffic patterns to provide congestion insights, optimized routes, and travel-time estimates.
+            </p>
+        </div>
+    </section>
+
+ 
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Why Choose Our System?</h2>
+        <div class="feature-container">
+            <div class="feature">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Live Traffic Updates</h3>
+                <p>Get real-time road congestion reports.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-route"></i>
+                <h3>Optimized Routes</h3>
+                <p>Find the fastest & least crowded paths.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-car-crash"></i>
+                <h3>Road Condition Alerts</h3>
+                <p>Stay informed about road conditions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog & Latest Updates Section -->
+    <section class="blog-updates">
+        <h2>🚦 Latest Traffic News & Updates</h2>
+        <div class="blog-container">
+
+            <!-- Blog Card 1 -->
+            <div class="blog-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="https://images.pexels.com/photos/3766620/pexels-photo-3766620.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Traffic News">
+                        <h3 class="card-title">New Road Construction 🚧</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Expect delays near Thane Station due to metro work. Suggested alternate routes are via Ghodbunder Road.</p>
+                       
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Card 2 -->
+            <div class="blog-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="static/images/ai-analytics.jpeg" alt="Traffic AI">
+                        <h3 class="card-title">How ML Improves Traffic 🤖</h3>
+                    </div>
+                    <div class="card-back">
+                        <p>Machine Learning is making traffic predictions more accurate. Learn how it helps reduce congestion.</p>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2>User Testimonials</h2>
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <p>"This system has saved me hours of commuting time! Highly recommend!"</p>
+                <h4>- Rajesh Rane</h4>
+            </div>
+            <div class="testimonial">
+                <p>"Predictions and real-time updates make traveling so much easier!"</p>
+                <h4>- Aditi Patil</h4>
+            </div>
+            <div class="testimonial">
+                <p>"A game-changer for anyone dealing with daily traffic!"</p>
+                <h4>- Akash Gupta</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+ <!-- Feedback Section -->
+<section class="feedback">
+    <h2>We Value Your Feedback</h2>
+    <form class="feedback-form" id="feedbackForm">
+        <input type="text" id="userName" placeholder="Enter your name" required>
+        <textarea id="feedbackText" placeholder="Share your experience..." required></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+    <!-- Pop-up Message -->
+    <div id="popupMessage" class="popup">
+        <p>🎉 Thank you, <span id="userNameDisplay"></span>, for your feedback!</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</section>
+
+<!-- JavaScript for Form Submission and Pop-up -->
+<script>
+
+document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    const userName = document.getElementById("userName");
+    const feedbackText = document.getElementById("feedbackText");
+
+    if (userName.value.trim() === "" || feedbackText.value.trim() === "") {
+        alert("Please enter your name and feedback.");
+        return;
+    }
+
+    fetch('/submit-feedback', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: userName.value, feedback: feedbackText.value })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Show pop-up message
+        document.getElementById("userNameDisplay").innerText = userName.value;
+        document.getElementById("popupMessage").style.display = "block";
+
+        // Clear input fields after successful submission
+        userName.value = "";
+        feedbackText.value = "";
+    })
+    .catch(error => console.error("Error submitting feedback:", error));
+});
+
+// Close pop-up function
+
+
+</script>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Traffic Predictor. All Rights Reserved.</p>
+            <div class="social-icons">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
